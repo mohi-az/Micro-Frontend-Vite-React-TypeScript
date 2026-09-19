@@ -1,50 +1,54 @@
 import { Link } from "react-router-dom";
 import Logo from '../assets/Logo.png'
-import { faTruckFast, faMoneyBillTransfer, faPhoneVolume, faUserAlt, faShoppingBasket } from '@fortawesome/free-solid-svg-icons'
+import { faTruckFast, faMoneyBillTransfer, faPhoneVolume, faUserAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from "react";
 import { Modal } from "../Components/Modal/modal";
-import { Login } from 'AuthRemote/Login';
 
 type MenuItems = {
     title: string,
     url: string
 }
 const Header = () => {
-    let CardVal = 0;
-    const menuItems: MenuItems[] = [{ 'title': 'BIKES', 'url': 'BIKES' }, { 'title': 'E-BIKES', 'url': 'EBIKES' }, { 'title': 'ROAD BIKES', 'url': 'ROADBIKES' },
-    { 'title': 'MOUNTAIN BIKES', 'url': 'MOUNTAINBIKES' }, { 'title': 'GRAVEL BIKES', 'url': 'GRAVELBIKES' }]
+    const menuItems: MenuItems[] = [{ title: 'PRODUCTS', url: '/' }];
 
     const [showLogin, setshowLogin] = useState(false);
     const [htmlContent, setHtmlContent] = useState<HTMLElement | null>(null);
+    const [loginStatus, setLoginStatus] = useState('Loading login…');
 
     const userClick = () => {
             setshowLogin(true)
     }
     useEffect(() => {
-        if (showLogin) {
-            if (!localStorage.getItem('userName')){
-            const responseForm: HTMLElement = Login('LoginForm');
-            setHtmlContent(responseForm);
-            }
-        }
+        if (!showLogin) return;
+        let active = true;
+        setLoginStatus('Loading login…');
+        import('AuthRemote/Login')
+            .then(module => {
+                const Login = module.Login ?? module.default.Login;
+                if (!Login) throw new Error('Auth remote does not expose Login');
+                if (active) {
+                    setHtmlContent(Login());
+                    setLoginStatus('');
+                }
+            })
+            .catch(() => {
+                if (active) setLoginStatus('The auth remote is unavailable. Start Auth-Remote on port 5002.');
+            });
+        return () => { active = false; };
     }, [showLogin]);
     return (
         <div className="w-full">
    
-            {showLogin && <Modal visible={showLogin} invisible={setshowLogin} title="I am already a customer" content={htmlContent} />}
+            {showLogin && <Modal visible={showLogin} invisible={setshowLogin} title="Login demo" content={htmlContent} message={loginStatus} />}
             <div className="w-full  flex flex-row gap-5 justify-end pt-4 -mb-9 pr-12 text-sm text-gray-700">
-                <FontAwesomeIcon icon={faUserAlt} size="2x" onClick={() => userClick()} className="cursor-pointer" />
-                <div>
-                    <FontAwesomeIcon icon={faShoppingBasket} size="2x" className="cursor-pointer" />
-                    <span className="text-xl pl-2">
-                        {CardVal.toString()}
-                        {/* <CurrencyFormat  thousandSeparator={true} value={CardVal.toString()} displayType="text" prefix={'€'}/> */}
-                    </span></div>
+                <button type="button" onClick={userClick} aria-label="Open login demo">
+                    <FontAwesomeIcon icon={faUserAlt} size="2x" />
+                </button>
             </div>
 
             <div className="flex flex-row items-end pl-10 pr-10">
-                <img src={Logo} alt="Vite logo" width={"150px"} />
+                <img src={Logo} alt="Bike shop demo logo" width={"150px"} />
                 <div className="flex flex-row pl-10  ">
                     {
                         menuItems.map(item => <li key={item.url} className="list-none pl-5 pr-5 " > <Link to={item.url} className="text-gray-700 no-underline font-bold hover:text-teal-500" >{item.title}</Link ></li>)

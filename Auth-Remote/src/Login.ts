@@ -1,18 +1,10 @@
 import './style.css';
 
 
-export const Login = (param: string) => {
-    console.log(` main Login console`)
-    console.log(param)
-    const mainContainer = document.createElement('div')
-    if (param === 'LoginForm') return getResponse();
-    else return mainContainer
-}
-const getResponse = () => {
-    console.log(` Remote console`)
+export const Login = (): HTMLElement => {
     const html: HTMLElement = document.createElement('div');
     html.appendChild(LoginForm());
-    return html
+    return html;
 };
 
 const LoginForm = () => {
@@ -27,6 +19,7 @@ const LoginForm = () => {
     container.appendChild(titleLabel);
 
     const emailLabel = document.createElement('label');
+    emailLabel.htmlFor = 'email';
     emailLabel.textContent = 'Email address';
     emailLabel.className = 'text-gray-900 text-left';
     container.appendChild(emailLabel);
@@ -41,6 +34,7 @@ const LoginForm = () => {
     container.appendChild(emailInput);
 
     const passwordLabel = document.createElement('label');
+    passwordLabel.htmlFor = 'password';
     passwordLabel.textContent = 'Password';
     passwordLabel.className = 'text-gray-900 text-left';
     container.appendChild(passwordLabel);
@@ -57,11 +51,13 @@ const LoginForm = () => {
     signInButton.className = "inline-flex items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-cyan-500 hover:bg-cyan-600 focus:bg-cyan-700 disabled:cursor-not-allowed disabled:border-cyan-300 disabled:bg-cyan-300 disabled:shadow-none";
     signInButton.innerHTML = 'Sign in';
     signInButton.id = "sign_in";
+    signInButton.type = 'submit';
 
     const registerButton = document.createElement('button');
     registerButton.className = "inline-flex items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-green-500 hover:bg-green-600 focus:bg-green-700 disabled:cursor-not-allowed disabled:border-green-300 disabled:bg-green-300 disabled:shadow-none";
     registerButton.innerHTML = 'Create an Account';
     registerButton.id = "create_account";
+    registerButton.type = 'button';
 
     const buttonContainer = document.createElement('div')
     buttonContainer.className = "justify-end flex w-full pt-4 gap-2";
@@ -87,11 +83,14 @@ const LoginForm = () => {
     resgisterNote.appendChild(ulNote);
     container.appendChild(resgisterNote);
 
+    const demoNote = document.createElement('p');
+    demoNote.className = 'pt-4 text-sm text-gray-900';
+    demoNote.textContent = 'Architecture demo only: authentication is not connected.';
+    container.appendChild(demoNote);
+    form.addEventListener('submit', event => event.preventDefault());
+
     form.appendChild(container);
     return form;
 };
-const container = document.getElementById('root');
-container?.appendChild(LoginForm());
-
 export default Login;
 

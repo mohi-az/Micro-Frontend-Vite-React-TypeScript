@@ -8,7 +8,7 @@ export default defineConfig({
   
   },
   federation({
-    name: 'remote_app',
+    name: 'auth_remote',
     filename: 'remoteEntry.js', // default file name
     exposes: {
       './Login': './src/Login',

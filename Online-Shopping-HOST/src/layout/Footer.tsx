@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faFacebook, faInstagram, faCcMastercard, faCcVisa, faCcAmazonPay, faCcPaypal, faCcApplePay, faCcDiscover, faCcAmex } from "@fortawesome/free-brands-svg-icons"
+import { faFacebook, faInstagram, faCcMastercard, faCcVisa, faCcAmazonPay, faCcPaypal, faCcApplePay, faCcDiscover } from "@fortawesome/free-brands-svg-icons"
 export const Footer = () => {
 
 

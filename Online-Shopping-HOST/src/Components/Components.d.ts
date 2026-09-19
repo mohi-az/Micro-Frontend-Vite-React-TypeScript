@@ -1,13 +1,9 @@
-import { ReactNode } from "react"
+import type { Dispatch, SetStateAction } from 'react';
 
-type Dialog_Type = {
-    Content : string,
-    Title:string,
-    Action : Function
-}
-type Modal_Type = {
+export type Modal_Type = {
     visible:boolean,
     title:string,
     content:HTMLElement| null,
-    invisible:React.Dispatch<React.SetStateAction<boolean>>
+    message:string,
+    invisible:Dispatch<SetStateAction<boolean>>
 }

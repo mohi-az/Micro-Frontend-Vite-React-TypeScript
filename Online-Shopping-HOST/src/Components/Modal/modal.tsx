@@ -2,11 +2,12 @@ import { Fragment, useEffect, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Modal_Type } from '../Components'
 
-export const Modal = ({ visible = false, title = '', content, invisible }: Modal_Type) => {
+export const Modal = ({ visible = false, title = '', content, message, invisible }: Modal_Type) => {
   const contentref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (contentref.current && content)
-      contentref.current.replaceWith(content);
+    const container = contentref.current;
+    if (container && content) container.appendChild(content);
+    return () => { if (container && content && container.contains(content)) container.removeChild(content); };
 
   }, [content]);
   return (
@@ -43,6 +44,7 @@ export const Modal = ({ visible = false, title = '', content, invisible }: Modal
                     <hr />
                   </Dialog.Title>
                   <div className="mt-3">
+                    {message && <p role="status">{message}</p>}
                     <div ref={contentref}></div>
                   </div>
                 </div>

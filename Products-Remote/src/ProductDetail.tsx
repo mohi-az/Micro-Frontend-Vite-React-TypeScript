@@ -1,27 +1,25 @@
-import { Fragment, useEffect, useState } from "react"
-import { GetProductDetail } from "./Services/APIs"
+import { Fragment } from 'react';
+import { catalog } from './data/catalog';
+import { productImageUrl } from './imageUrl';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPercent, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 export const ProductDetail = ({ id }: { id: string }) => {
-    const [product, setProduct] = useState<Product | null>(null);
-    useEffect(() => {
-        GetProductDetail(id).then(Response => setProduct(Response));
-
-    }, [])
+    const product = catalog.find(item => String(item.id) === id);
+    if (!product) return <p role="alert">Product not found.</p>;
     return (
         <>
             {product &&
                 <Fragment>
-                    <div className="flex flex-row">
-                        <div className="w-1/2 flex flex-col">
+                    <div className="flex flex-col md:flex-row">
+                        <div className="w-full md:w-1/2 flex flex-col">
                             <span className="text-2xl">{product.Name}</span>
-                            <img src={import.meta.env.VITE_BASE_URL + '/images/Bikes/' + product.image} />
+                            <img src={productImageUrl(product.image)} alt={product.Name} />
                         </div>
-                        <div className="w-1/2 flex flex-col pl-10 gap-2 self-center pb-9">
+                        <div className="w-full md:w-1/2 flex flex-col md:pl-10 gap-2 self-center pb-9">
                             {product.discount ? (
                                 <div className="flex flex-row gap-3  items-center">
                                     <span className="text-red-600 text-3xl font-bold">
-                                        {product.Price - (product.Price * product.discount / 100)} €
+                                        {product.Price - (product.Price * product.discount / 100)} $
                                     </span>
                                     <FontAwesomeIcon icon={faPercent} size="xl" />
                                     <span className="text-lg">{product.Price} ({product.discount}%) OFF</span>
@@ -29,7 +27,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
                             ) :
                                 (
                                     <div className="flex flex-row">
-                                        <span className="text-3xl">{product.Price}€</span>
+                                        <span className="text-3xl">{product.Price}$</span>
                                     </div>
                                 )}
                             <span className="text-green-600">Prices include VAT plus shipping costs</span>
@@ -38,7 +36,7 @@ export const ProductDetail = ({ id }: { id: string }) => {
                                 <div>
                                     <fieldset className="flex gap-10">
                                         <div className="relative flex items-center">
-                                            <input className="w-4 h-4 transition-colors bg-white border-2 rounded-full appearance-none cursor-pointer peer border-slate-500 checked:border-blue-500 checked:bg-blue-500 checked:hover:border-blue-600 checked:hover:bg-blue-600 focus:outline-none checked:focus:border-blue-700 checked:focus:bg-blue-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-slate-100 disabled:bg-slate-50" type="radio" value="huey" checked id="huey" name="drone" />
+                                            <input className="w-4 h-4 transition-colors bg-white border-2 rounded-full appearance-none cursor-pointer peer border-slate-500 checked:border-blue-500 checked:bg-blue-500 checked:hover:border-blue-600 checked:hover:bg-blue-600 focus:outline-none checked:focus:border-blue-700 checked:focus:bg-blue-700 focus-visible:outline-none disabled:cursor-not-allowed disabled:border-slate-100 disabled:bg-slate-50" type="radio" value="huey" defaultChecked id="huey" name="drone" />
                                             <label htmlFor="huey" className="pl-2 cursor-pointer text-slate-500 peer-disabled:cursor-not-allowed peer-disabled:text-slate-400" >
                                                 35CM
                                             </label>
@@ -63,8 +61,8 @@ export const ProductDetail = ({ id }: { id: string }) => {
                             </div>
                             <span className="text-lg">delivery time: 4 - 6 working days</span>
                             {/* <input type="button" id="addcart" className="w-1/6" value="" /> */}
-                            <button className="inline-flex items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-white transition duration-300 rounded focus-visible:outline-none whitespace-nowrap bg-sky-500 hover:bg-sky-600 focus:bg-sky-700 disabled:cursor-not-allowed disabled:border-sky-300 disabled:bg-sky-300 disabled:shadow-none">
-                                <span className="order-2">Add to Cart</span>
+                            <button type="button" disabled title="Cart is outside this architecture demo" className="inline-flex items-center justify-center h-10 gap-2 px-5 text-sm font-medium tracking-wide text-gray-700 rounded bg-gray-200">
+                                <span className="order-2">Cart demo only</span>
                                 <span className="relative only:-mx-5">
                                     <FontAwesomeIcon icon={faCartShopping} size="1x" />
                                 </span>

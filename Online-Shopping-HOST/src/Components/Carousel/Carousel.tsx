@@ -50,7 +50,7 @@ export const CarouselSilder = () => {
                         </div>
                         <span className='text-3xl font-mono  italic text-gray-600'>Winter Sale</span>
                         <div className='pt-5'>
-                            <button className='text-1xl bg-slate-900 text-slate-100 p-3 hover:text-teal-500'>SHOP ALL SALE</button>
+                            <button type="button" onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className='text-1xl bg-slate-900 text-slate-100 p-3 hover:text-teal-500'>VIEW PRODUCTS</button>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ export const CarouselSilder = () => {
                         </div>
                         <span className='text-3xl font-mono  italic text-gray-600'>Winter Sale</span>
                         <div className='pt-5'>
-                            <button className='text-1xl bg-slate-900 text-slate-100 p-3 hover:text-teal-500'>SHOP ALL SALE</button>
+                            <button type="button" onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })} className='text-1xl bg-slate-900 text-slate-100 p-3 hover:text-teal-500'>VIEW PRODUCTS</button>
                         </div>
                     </div></div>
 

@@ -1,0 +1,8 @@
+{
+  "name": "micro-frontend-demo",
+  "private": true,
+  "scripts": {
+    "build": "npm run build --prefix Products-Remote && npm run build --prefix Auth-Remote && npm run build --prefix Online-Shopping-HOST",
+    "lint": "npm run lint --prefix Products-Remote && npm run lint --prefix Online-Shopping-HOST"
+  }
+}
