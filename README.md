@@ -4,11 +4,18 @@ I built this project to get hands-on with module federation: how a host loads se
 
 ## The three apps
 
+<<<<<<< HEAD
 | App | What it does | Port |
 | --- | --- | --- |
 | `Online-Shopping-HOST` | React shell, routes, header, and footer | 5000 |
 | `Products-Remote` | React product list and detail page | 5001 |
 | `Auth-Remote` | Login form built with plain TypeScript | 5002 |
+=======
+# Technologies Used
+Core Project (Host): Vite + React + Vite module federation + Typescript + Tailwind CSS <br/>
+Auth Project (Remote): Vite + Typescript + Vite module federation + Tailwind <br/>
+Product Project (Remote): Vite + React + Vite module federation + Typescript + Tailwind CSS <br/>
+>>>>>>> db0a506ccc401f8cc98d449514b30ad33045da17
 
 The host loads both remotes with `@originjs/vite-plugin-federation`. It shares React with the products remote. I kept routing in the host: when someone selects a product, the remote sends a `CustomEvent` with its ID, and the host navigates to `/products/:id`. That URL works after a refresh too. The auth remote uses plain TypeScript because I wanted to try a remote that does not use React.
 
@@ -25,11 +32,16 @@ npm run build
 
 Then start each app in its own terminal:
 
+<<<<<<< HEAD
 ```sh
 npm run serve --prefix Products-Remote
 npm run serve --prefix Auth-Remote
 npm run serve --prefix Online-Shopping-HOST
 ```
+=======
+REMOTE: localhost:5001 (Product)
+REMOTE: localhost:5002 (Auth)
+>>>>>>> db0a506ccc401f8cc98d449514b30ad33045da17
 
 Open <http://localhost:5000>. Try a product, refresh its detail page, and open the login form from the user icon. You can also go straight to <http://localhost:5000/products/1376907>.
 
